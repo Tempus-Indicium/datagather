@@ -1,0 +1,14 @@
+# Application server port
+SERVER_PORT=7789
+
+# Location on file-system to use for the file storage
+FILE_STORE_DIR=/home/peterzen/Code/Java/2-2-infrastructures-leertaak-2/out/file-store/
+
+# The naming (date) format for our files
+FILE_DATE_FORMAT=yyyy-MM-dd-HH
+
+# Path to the stations table export
+STATIONS_CSV=/home/peterzen/Code/Java/2-2-infrastructures-leertaak-2/resources/stations.csv
+
+# The number of measurement rows to store in ram before writing to disk
+ROWS_PER_WRITE=10000
