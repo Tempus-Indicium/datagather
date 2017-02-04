@@ -30,12 +30,21 @@ public class FileStore {
 
         int nRead;
         byte[] data = new byte[15600];
+        int byteCounter = 0;
+        byte[] secondMark = new byte[]{ (byte) 0xFF, (byte) 0xFF };
 
         while ((nRead = filteredDataStream.read(data, 0, data.length)) != -1) {
             buffer.write(data, 0, nRead);
+            if (byteCounter >= 15600) {
+                buffer.write(secondMark); // mark the start of a new second
+                byteCounter = 0;
+            }
             buffer.flush();
 
-            FileStore.writeToFile(buffer.toByteArray());
+            byte[] bufferBytes = buffer.toByteArray();
+            byteCounter += bufferBytes.length;
+
+            FileStore.writeToFile(bufferBytes);
 
             buffer.reset();
         }
@@ -151,12 +160,12 @@ public class FileStore {
 
     public static synchronized void writeToFile(byte[] bytes) {
         System.out.println("PERFORMING FILE WRITE, bytes: "+bytes.length);
-        FileStore.updateDateUpdateFileIfNeeded();
         try {
             FileStore.fileOutputStream.write(bytes); // NOTE: encoding might cause reading fails
             FileStore.fileOutputStream.flush(); // zou hier nog wat kunnen zijn
         } catch (IOException e) {
             e.printStackTrace();
         }
+        FileStore.updateDateUpdateFileIfNeeded();
     }
 }
