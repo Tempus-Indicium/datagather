@@ -1,7 +1,5 @@
 package com.tempus_indicium.datagather;
 
-import org.apache.commons.io.IOUtils;
-
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
